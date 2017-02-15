@@ -1,0 +1,5 @@
+tn/sifast/bean/Bean.class
+tn/sifast/rest/BeanRest.class
+tn/sifast/rest/WebApp.class
+tn/sifast/dao/CrudBean.class
+tn/sifast/dao/DaoBean.class
