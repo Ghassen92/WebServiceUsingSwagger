@@ -39,7 +39,7 @@ public class DaoFactory {
 	    }
 
 	     
-	     public IngenieurDao getBeanDao() {
+	     public IngenieurDao getIngenieurDao() {
 	        return new IngenieurDaoImpl(this);
 	    } 
 	   

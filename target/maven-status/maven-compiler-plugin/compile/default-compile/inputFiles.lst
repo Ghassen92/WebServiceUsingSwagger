@@ -1,5 +1,7 @@
-/home/ghassen/workspacespring/TestSwaagger2/src/tn/sifast/rest/BeanRest.java
-/home/ghassen/workspacespring/TestSwaagger2/src/tn/sifast/rest/WebApp.java
-/home/ghassen/workspacespring/TestSwaagger2/src/tn/sifast/dao/DaoBean.java
-/home/ghassen/workspacespring/TestSwaagger2/src/tn/sifast/bean/Bean.java
-/home/ghassen/workspacespring/TestSwaagger2/src/tn/sifast/dao/CrudBean.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/bean/Ingenieur.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/dao/IngenieurDaoImpl.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/soap/IngenieurSoap.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/rest/IngenieurRest.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/dao/DaoFactory.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/dao/IngenieurDao.java
+/home/ghassen/workspacespring/WebServiceSwagger/src/tn/sifast/rest/WebApp.java

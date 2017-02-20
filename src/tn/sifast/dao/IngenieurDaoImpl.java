@@ -71,18 +71,27 @@ public class IngenieurDaoImpl implements IngenieurDao {
 	}
 
 	@Override
-	public int createBean(Ingenieur b) {
+	public int creerIngenieur(Ingenieur b) {
 		Connection connection=null;
 		java.sql.PreparedStatement pst=null;
 		try{
 			String sql="INSERT INTO `ingenieur`(`id`, `nom`, `prenom`) VALUES (NULL,?,?)";
 			connection=daoFactory.getConnection();
-			pst=connection.prepareStatement(sql);
+			pst=connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			
 			pst.setString(1,b.getNom());
 			pst.setString(2, b.getPrenom());
 
-          return  pst.executeUpdate();
+            pst.executeUpdate();
+            
+            try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
 			
 		}catch(Exception e){e.printStackTrace();return -1; }
 		finally{
@@ -118,6 +127,31 @@ public class IngenieurDaoImpl implements IngenieurDao {
 			
 			}
 		
+	}
+
+	@Override
+	public int update(Ingenieur ing, int id) {
+		Connection connection=null;
+		java.sql.PreparedStatement pst=null;
+		try{
+			String sql="UPDATE `ingenieur` SET `nom`=?,`prenom`=? WHERE id=?";
+			connection=daoFactory.getConnection();
+			pst=connection.prepareStatement(sql);
+			
+			pst.setString(1, ing.getNom());
+			pst.setString(2, ing.getPrenom());
+			pst.setInt(3, id);
+
+          return  pst.executeUpdate();
+			
+		}catch(Exception e){e.printStackTrace();return -1; }
+		finally{
+			try {
+				connection.close();
+				pst.close();
+			} catch (SQLException e) {	e.printStackTrace();}
+			
+			}
 	}
 
 }

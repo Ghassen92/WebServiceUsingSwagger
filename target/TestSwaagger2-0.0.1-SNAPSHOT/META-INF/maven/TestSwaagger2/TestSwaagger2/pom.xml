@@ -32,11 +32,6 @@
 		    <artifactId>swagger-jaxrs</artifactId>
 		    <version>1.5.0</version>
 		 </dependency>
-	<dependency>
-	    <groupId>org.camunda.bpm</groupId>
-	    <artifactId>camunda-engine</artifactId>
-	    <version>7.6.0</version>
-	</dependency>
 	 <dependency> 
 	    <groupId>org.glassfish.jersey.containers</groupId>
 	    <artifactId>jersey-container-servlet</artifactId>
@@ -47,7 +42,6 @@
             <artifactId>jersey-server</artifactId>
             <version>2.26-b01</version>
         </dependency>
-	   <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-moxy -->
 	<dependency>
 	    <groupId>org.glassfish.jersey.media</groupId>
 	    <artifactId>jersey-media-moxy</artifactId>
@@ -59,6 +53,48 @@
 	    <artifactId>javax.ws.rs-api</artifactId>
 	    <version>2.0</version>
 	</dependency>
-		 
+
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.40</version>
+	</dependency>
+		<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>2.2.8</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>2.2.8</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>6.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces.themes</groupId>
+				<artifactId>all-themes</artifactId>
+				<version>1.0.10</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
+				<scope>provided</scope>
+			</dependency>
   </dependencies>
 </project>

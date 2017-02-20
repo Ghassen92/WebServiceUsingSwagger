@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Insérer le titre ici</title>
+    </h:head>
+    <h:body>
+        <h3>Liste des ingenieurs</h3>
+		    <h:form rendered="#{not empty ingenieurBean.list}">
+		        <h:dataTable value="#{ingenieurBean.list}" var="item">
+		            <h:column><f:facet name="header">ID</f:facet>#{item.id}</h:column>
+		            <h:column><f:facet name="header">NOM</f:facet>#{item.nom}</h:column>
+		            <h:column><f:facet name="header">PRENOM</f:facet>#{item.prenom}</h:column>		            
+		            <h:column>
+		                <h:commandButton value="modifier" action="#{ingenieurBean.edit(item)}" />
+		            </h:column>
+		            <h:column>
+		                <h:commandButton value="supprimer" action="#{ingenieurBean.delete(item)}" />
+		            </h:column>
+		        </h:dataTable>
+    </h:form>
+    <h:panelGroup rendered="#{empty ingenieurBean.list}">
+        <p>ajouter des ings SVP.</p>
+    </h:panelGroup>
+    
+     <h:panelGroup rendered="#{!ingenieurBean.edit}">
+        <h3>Ajouter un ingenieur</h3>
+        <h:form>
+            <p>Nom: <h:inputText value="#{ingenieurBean.item.nom}" /></p>
+            <p>Prenom: <h:inputText value="#{ingenieurBean.item.prenom}" /></p>
+            <p>
+                <h:commandButton value="ajouter" action="#{ingenieurBean.add}" />
+                <h:commandButton value="reset" action="#{ingenieurBean.resetAdd}" />
+            </p>
+        </h:form>
+    </h:panelGroup>
+    
+     <h:panelGroup rendered="#{ingenieurBean.edit}">
+        <h3>modifier l'ingenieur d'id: #{ingenieurBean.item.id}</h3>
+        <h:form>
+            <p>Nom: <h:inputText value="#{ingenieurBean.item.nom}" /></p>
+            <p>Prenom: <h:inputText value="#{ingenieurBean.item.prenom}" /></p>
+            <p>
+                <h:commandButton value="enregistrer" action="#{ingenieurBean.saveEdit}" />
+                <h:commandButton value="annuler" action="#{ingenieurBean.cancelEdit}" />
+            </p>
+        </h:form>
+    </h:panelGroup>
+   
+    </h:body>
+</html>

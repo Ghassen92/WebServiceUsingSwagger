@@ -1,16 +1,22 @@
 package tn.sifast.soap;
 
 
+
 import java.util.List;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.Style;
+
 
 import tn.sifast.bean.Ingenieur;
 import tn.sifast.dao.DaoFactory;
 import tn.sifast.dao.IngenieurDao;
 
 @WebService
+@SOAPBinding(style = Style.RPC)
+
 public class IngenieurSoap {
 
 	DaoFactory dao;
@@ -18,27 +24,35 @@ public class IngenieurSoap {
 
 	public IngenieurSoap() {
 		dao=DaoFactory.getInstance();
-		ingenieurDao=dao.getBeanDao();
+		ingenieurDao=dao.getIngenieurDao();
  	}
 	
-	public List<Ingenieur> getAll() {
-		return ingenieurDao.getAll();
+	public Ingenieur[]getAll() {
+		List<Ingenieur> listeIng=ingenieurDao.getAll();
+		Ingenieur[]tmp=new Ingenieur[listeIng.size()];
+		listeIng.toArray(tmp);
+		return tmp;
 	}
 
-	public Ingenieur get(@WebParam (name="id")int id) {
+	public Ingenieur getIngenieur(@WebParam (name="id")int id) {
 		return ingenieurDao.get(id);
 	}
 
-	public int createBean( @WebParam(name="nom")String nom, 
+	public int creerIngenieur( @WebParam(name="nom")String nom, 
 						   @WebParam(name="prenom")String prenom) {
-		return ingenieurDao.createBean(new Ingenieur(nom,prenom));
+		return ingenieurDao.creerIngenieur(new Ingenieur(nom,prenom));
 	}
 
-	public int delete(@WebParam (name="id")int id) {
+	public int supprimerIngenieur(@WebParam (name="id")int id) {
 		return ingenieurDao.delete(id);
 	}
 
-	
+	public int modifierIngenieur( @WebParam(name="id")int id,
+								@WebParam(name="nom")String nom, 
+						   		@WebParam(name="prenom")String prenom){
+		System.out.println(id+ " "+nom+" "+prenom);
+		return ingenieurDao.update(new Ingenieur(id, nom,prenom),id);
+	}
 	
 	
 }

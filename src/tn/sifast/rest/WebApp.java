@@ -19,7 +19,7 @@ public class WebApp extends ResourceConfig {
 		beanConfig.setHost("localhost:8080");
 		beanConfig.setBasePath("/TestSwaagger2/rest");
 		beanConfig.setResourcePackage("tn.sifast.rest");
-
+		
 		beanConfig.setScan(true);
 		beanConfig.setPrettyPrint(true);
 		System.out.println(beanConfig.classes());
