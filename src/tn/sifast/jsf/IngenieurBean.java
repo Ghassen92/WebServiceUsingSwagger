@@ -55,7 +55,7 @@ private static final long serialVersionUID = 1L;
     }
     
     public void saveEdit() {
-        ingenieurDao.update(beforeEditItem, item.getId());
+        ingenieurDao.update(beforeEditItem.getNom(),beforeEditItem.getPrenom(), item.getId());
         this.item = new Ingenieur();
         edit = false;
         updateList();

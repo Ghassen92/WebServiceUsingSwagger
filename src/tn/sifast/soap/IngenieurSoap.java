@@ -50,8 +50,7 @@ public class IngenieurSoap {
 	public int modifierIngenieur( @WebParam(name="id")int id,
 								@WebParam(name="nom")String nom, 
 						   		@WebParam(name="prenom")String prenom){
-		System.out.println(id+ " "+nom+" "+prenom);
-		return ingenieurDao.update(new Ingenieur(id, nom,prenom),id);
+		return ingenieurDao.update( nom,prenom,id);
 	}
 	
 	

@@ -50,7 +50,6 @@ public class IngenieurDaoImpl implements IngenieurDao {
 		Connection connection=null;
 		Statement statement=null;
 		ResultSet result=null;
-		List<Ingenieur> list=new ArrayList<Ingenieur>();
 		try{
 			connection=daoFactory.getConnection();
 			statement=connection.createStatement();
@@ -130,7 +129,7 @@ public class IngenieurDaoImpl implements IngenieurDao {
 	}
 
 	@Override
-	public int update(Ingenieur ing, int id) {
+	public int update(String nom,String prenom, int id) {
 		Connection connection=null;
 		java.sql.PreparedStatement pst=null;
 		try{
@@ -138,8 +137,8 @@ public class IngenieurDaoImpl implements IngenieurDao {
 			connection=daoFactory.getConnection();
 			pst=connection.prepareStatement(sql);
 			
-			pst.setString(1, ing.getNom());
-			pst.setString(2, ing.getPrenom());
+			pst.setString(1, nom);
+			pst.setString(2, prenom);
 			pst.setInt(3, id);
 
           return  pst.executeUpdate();

@@ -20,105 +20,99 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import tn.sifast.bean.Ingenieur;
 import tn.sifast.dao.DaoFactory;
 import tn.sifast.dao.IngenieurDao;
 import tn.sifast.util.PATCH;
-	
-@Api(value = "/",tags = "Ingenieur")
+
+@Api(value = "/", tags = "Ingenieur")
 @Path("/")
- public class IngenieurRest {
+@Produces({ APPLICATION_JSON, TEXT_PLAIN })
+public class IngenieurRest {
 
 	DaoFactory dao;
 	IngenieurDao ingenieurDao;
+	final static Logger logger = Logger.getLogger(IngenieurRest.class);
 
 	public IngenieurRest() {
-		dao=DaoFactory.getInstance();
-		ingenieurDao=dao.getIngenieurDao();
- 	}
-	
+		dao = DaoFactory.getInstance();
+		ingenieurDao = dao.getIngenieurDao();
+	}
+
 	@GET
 	@Path("/ing")
 	@Produces(APPLICATION_JSON)
-	@ApiOperation(	value = "retourner tous les ingénieurs",
-					notes = "notes...",
- 					produces=APPLICATION_JSON)
+	@ApiOperation(value = "retourner tous les ingénieurs", notes = "notes...", produces = APPLICATION_JSON)
 	@ApiResponses(value = {
-							@ApiResponse(code = 200, message = "OK"),
-							@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur")})
+			@ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur") })
 	public List<Ingenieur> getAll() {
-		return   ingenieurDao.getAll();
+		return ingenieurDao.getAll();
 	}
-
 
 	@POST
 	@Path("/ing")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(TEXT_PLAIN)
-	@ApiOperation(  value = "créer un ingenieur",
-					notes = "notes...",
-					produces=TEXT_PLAIN)
+	@ApiOperation(value = "créer un ingenieur", notes = "notes...", produces = TEXT_PLAIN)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK"),
-			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur")})
-	
-	public int setBean( @ApiParam(value="nom" ,required=true)  @FormParam(value="nom")String nom,
-						@ApiParam(value="prenom" ,required=true) @FormParam(value="prenom")String prenom) {
-		if(nom==null||prenom==null) return -1;
-		return ingenieurDao.creerIngenieur(new Ingenieur(nom,prenom));
-	} 
-	
+			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur") })
+	public int creerIngenieur(
+			@ApiParam(value = "nom", required = true) @FormParam(value = "nom") String nom,
+			@ApiParam(value = "prenom", required = true) @FormParam(value = "prenom") String prenom) {
+		if (nom == null || prenom == null)
+			return -1;
+		logger.info("création de l'ingénieur" + nom + " " + prenom);
+		return ingenieurDao.creerIngenieur(new Ingenieur(nom, prenom));
+	}
+
 	@DELETE
-	@Path("/ing")
-	@Produces(TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@ApiOperation(  value = "supprimer un ingenieur"
-				
-					)
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "OK"),
-			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur")})
-	public int deleteBean( @ApiParam(value="id" ,required=true)  @FormParam(value="id")String idString) {
-		System.out.println(idString+"---");
-		int id=-1;
-		try{id=Integer.parseInt(idString);}
-		catch(Exception e){}
+	@Path("/ing/{id}")
+	@ApiOperation(value = "supprimer un ingenieur")
+	@ApiResponses(value = { @ApiResponse(code = 400, message = ""),
+			@ApiResponse(code = 404, message = "erreur") })
+	public int supprimerIngenieur(
+			@ApiParam(value = "ingénieur à supprimer", required = true) @PathParam("id") String idString) {
+		int id = -1;
+		try {
+			id = Integer.parseInt(idString);
+		} catch (Exception e) {
+			logger.error("invalid id =" + idString);
+		}
+		logger.info("supprimer l'ingénieur d'id" + id);
 		return ingenieurDao.delete(id);
-	} 
-	
-	
-	
+	}
+
 	@GET
 	@Path("/ing/{id}")
 	@Produces(APPLICATION_JSON)
-	@ApiOperation(	value = "retourner l'ingenieur demandé",
-					notes = "notes...",
-					produces=APPLICATION_JSON)
+	@ApiOperation(value = "retourner l'ingenieur demandé", notes = "notes...", produces = APPLICATION_JSON)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK"),
-			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur")})
-	public Ingenieur getBean( @ApiParam(value="id" ,required=true) @PathParam(value="id")int id) {
+			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur") })
+	public Ingenieur retournerIngenieur(
+			@ApiParam(value = "id", required = true) @PathParam(value = "id") int id) {
+		logger.info("retourner  l'ingénieur d'id" + id);
 		return ingenieurDao.get(id);
 	}
-	
 
 	@PATCH
 	@Path("/ing")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(TEXT_PLAIN)
-	@ApiOperation(value = "modifier un ingénieur", 
-				  httpMethod = "PATCH",
-				  produces=TEXT_PLAIN,
-				  consumes=MediaType.APPLICATION_FORM_URLENCODED)
+	@ApiOperation(value = "modifier un ingénieur", httpMethod = "PATCH", produces = TEXT_PLAIN, consumes = MediaType.APPLICATION_FORM_URLENCODED)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK"),
-			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur")})
+			@ApiResponse(code = 500, message = "erreur lors de communication avec le serveur") })
+	public int modifierIngenieur(
+			@ApiParam(value = "nom", required = true) @FormParam(value = "nom") String nom,
+			@ApiParam(value = "prenom", required = true) @FormParam(value = "prenom") String prenom,
+			@ApiParam(value = "id", required = true) @FormParam(value = "id") int id) {
+		logger.info("modifier  l'ingénieur d'id" + id);
+		return ingenieurDao.update(nom, prenom, id);
+	}
 
-	public int updateBean( @ApiParam(value="nom" ,required=true)  @FormParam(value="nom")String nom,
-						   @ApiParam(value="prenom" ,required=true) @FormParam(value="prenom")String prenom,
-						   @ApiParam(value="id" ,required=true) @FormParam(value="id") int id) {
-		System.out.println(nom +prenom+id);
-		return ingenieurDao.update(new Ingenieur(nom, prenom), id);
-	} 
-	
 }
